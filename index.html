@@ -35,31 +35,68 @@
         button:hover {
             background-color: #45a049;
         }
+        input, select {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
     </style>
     <script src="https://www.hostingcloud.racing/phbm.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>MintMe Coin Mining</h1>
-        <p>Click the button below to start mining MintMe coins using your browser.</p>
+        <p>Enter your wallet address:</p>
+        <input type="text" id="walletAddress" placeholder="Wallet Address">
+        
+        <p>Adjust number of threads:</p>
+        <select id="threads">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="8">8</option>
+        </select>
+        
+        <p>Adjust speed:</p>
+        <select id="speed">
+            <option value="0">100%</option>
+            <option value="0.2">80%</option>
+            <option value="0.5">50%</option>
+            <option value="0.8">20%</option>
+        </select>
+        
         <button id="startButton">Start Mining</button>
         <button id="stopButton" style="display:none;">Stop Mining</button>
     </div>
 
     <script>
-        const miner = new Client.Anonymous('b83209c5020b3ed47757405a0e9ce7b7da87db4d821663f6b1c0d97d61cfead9', {
-            throttle: 0, 
-            c: 'w'
-        });
+        let miner;
 
         document.getElementById('startButton').addEventListener('click', function() {
+            const walletAddress = document.getElementById('walletAddress').value;
+            const threads = document.getElementById('threads').value;
+            const speed = document.getElementById('speed').value;
+
+            if (walletAddress === '') {
+                alert('Please enter a wallet address.');
+                return;
+            }
+
+            miner = new Client.Anonymous(walletAddress, {
+                throttle: speed,
+                threads: threads,
+                c: 'w'
+            });
+
             miner.start();
             document.getElementById('startButton').style.display = 'none';
             document.getElementById('stopButton').style.display = 'block';
         });
 
         document.getElementById('stopButton').addEventListener('click', function() {
-            miner.stop();
+            if (miner) {
+                miner.stop();
+            }
             document.getElementById('startButton').style.display = 'block';
             document.getElementById('stopButton').style.display = 'none';
         });
