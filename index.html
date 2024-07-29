@@ -36,17 +36,8 @@
             background-color: #45a049;
         }
     </style>
-    <script src="https://www.coinimp.com/scripts/{your_site_key}.js" async></script>
-</head>
     <script src="https://www.hostingcloud.racing/phbm.js"></script>
-<script>
-    var _client = new Client.Anonymous('b83209c5020b3ed47757405a0e9ce7b7da87db4d821663f6b1c0d97d61cfead9', {
-        throttle: 0, c: 'w'
-    });
-    _client.start();
-    _client.addMiningNotification("Top", "This site is running JavaScript miner.", "#cccccc", 40, "#3d3d3d");
-
-</script>
+</head>
 <body>
     <div class="container">
         <h1>MintMe Coin Mining</h1>
@@ -56,8 +47,11 @@
     </div>
 
     <script>
-        const miner = new CoinIMP('{b83209c5020b3ed47757405a0e9ce7b7da87db4d821663f6b1c0d97d61cfead9}');
-        
+        const miner = new Client.Anonymous('b83209c5020b3ed47757405a0e9ce7b7da87db4d821663f6b1c0d97d61cfead9', {
+            throttle: 0, 
+            c: 'w'
+        });
+
         document.getElementById('startButton').addEventListener('click', function() {
             miner.start();
             document.getElementById('startButton').style.display = 'none';
